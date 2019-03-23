@@ -30,41 +30,30 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate () {
 
-		if(Input.GetMouseButton(0))
+		if(Input.GetMouseButton(0) && canJump && !extraJump)
 		{
+			/* Ray _ray = _camera.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
-			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-			if(Physics.Raycast(ray, out hit))
+			if (Physics.Raycast(_ray, out hit))
 			{
 				Transform objectHit = hit.transform;
-				if(objectHit.gameObject.tag != "Player" && objectHit.gameObject.tag != "Mountain" && objectHit.gameObject.tag != "Obstacle")
-				{
-					Debug.Log("PAUSE");
-					return;
-				}
-			}
-		}
-		else
-		{
-			return;
-		}
-
-		if(GameManager.instance.isPaused)
-			return;
-
-		if(canJump && !extraJump)
+				Debug.Log("X: "+objectHit.position.x+" Y: "+objectHit.position.y);
+			}*/
 			Jump();
-		
-		if(Input.GetMouseButtonUp(0) && extraJump && !canJump)
-		{
-			extraJump = false;
-			return;
 		}
-	
-		if(extraJump && !canJump)
+		if(Input.GetMouseButton(0) && !canJump && extraJump)
+		{
 			ExtraJump();
-
+		}	
+		if(Input.GetMouseButtonUp(0))
+		{
+			canJump = false;
+			extraJump = false;
+		}
+		
+		
+			
 	}
 
 	void Jump()
