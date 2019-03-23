@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - UpObstacle
   - Mountain
+  - Panel
   layers:
   - Default
   - TransparentFX

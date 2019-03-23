@@ -14,7 +14,7 @@ public class SpawnPoint : MonoBehaviour
     void Start()
     {
         chance = Random.Range(0, 1f);
-        if(chance > 0.75f)
+        if(chance > 0.9f)
             return;
 
         int index = Random.Range(0, obstacle.Length);

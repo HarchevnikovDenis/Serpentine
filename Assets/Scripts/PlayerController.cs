@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private Text _text;
 	[SerializeField] private Text _textCoins;
 	[SerializeField] private Camera _camera;
+	[SerializeField] private ParticleSystem _particle;
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour {
 				Debug.Log("X: "+objectHit.position.x+" Y: "+objectHit.position.y);
 			}*/
 			Jump();
+			_particle.Stop();
 		}
 		if(Input.GetMouseButton(0) && !canJump && extraJump)
 		{
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour {
 			extraJump = false;
 			timing  = 0f;
 			anim.speed = 1f;
+			_particle.Play();
 		}
 
 	}
