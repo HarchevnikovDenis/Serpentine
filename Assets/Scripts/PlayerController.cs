@@ -16,10 +16,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Time.timeScale = 1f;
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
-		Time.timeScale = 1f;
 		_textCoins.text = GameManager.instance.coinsCount.ToString();
 		StartCoroutine("AddScore");
 	}
@@ -40,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit))
 			{
 				Transform objectHit = hit.transform;
-				if(objectHit.gameObject.tag != "Player" && objectHit.gameObject.tag != "Mountain")
+				if(objectHit.gameObject.tag != "Player" && objectHit.gameObject.tag != "Mountain" && objectHit.gameObject.tag != "Obstacle")
 				{
 					Debug.Log("PAUSE");
 					return;
