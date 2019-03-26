@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     {
         if(isPaused)
             player.enabled = false;
+        if(player.isOver)
+            player.enabled = false;
     }
 
     public void GameOver()

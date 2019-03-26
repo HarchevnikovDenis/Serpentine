@@ -23,7 +23,7 @@ public class CameraScript : MonoBehaviour {
 	
 
 	void FixedUpdate () {
-		Vector3 needHeight = new Vector3(transform.position.x, Player.y+7f, transform.position.z);
+		Vector3 needHeight = new Vector3(transform.position.x, Player.y+6f, transform.position.z);
 		transform.position = Vector3.Lerp(transform.position, needHeight, 0.1f);
 	}
 }
