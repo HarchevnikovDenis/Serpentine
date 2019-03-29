@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null;
-    [SerializeField] private PlayerController player;
-    [HideInInspector]public int bestScore;
-    [HideInInspector]public int currentScore;
-    [HideInInspector]public int coinsCount;
-    [HideInInspector]public bool isPaused;
-    // Start is called before the first frame update
+    public static GameManager instance = null;          //Singleton
+    [SerializeField] private PlayerController player;   //Ссылка на игрока
+    [HideInInspector]public int bestScore;              //Лучший результат
+    [HideInInspector]public int currentScore;           //Текущий результат
+    [HideInInspector]public int coinsCount;             //Кол-во монет
+    [HideInInspector]public bool isPaused;              //Проверка паузы
+    private GameObject _GameOverPanel;                  //Панель паузы
+ 
+ 
     void Awake()
     {
+        if(instance == null)
+            instance = this;
+        else if(instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+        DontDestroyOnLoad(gameObject);
+
+        //if(GameManager.instance && GameManager.instance != this)
+        //   Destroy(GameManager.instance.gameObject);
+
         isPaused = false;
         if(!PlayerPrefs.HasKey("COINS"))
             coinsCount = 0;
@@ -26,11 +41,8 @@ public class GameManager : MonoBehaviour
         else
             bestScore = PlayerPrefs.GetInt("BEST");
 
-        if(instance == null)
-            instance = this;
-        else if(instance != this)
-                Destroy(this);
-        DontDestroyOnLoad(gameObject);
+        _GameOverPanel = GameObject.Find("GameOverPanel");
+        _GameOverPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,15 +52,22 @@ public class GameManager : MonoBehaviour
             player.enabled = false;
         if(player.isOver)
             player.enabled = false;
+        if(_GameOverPanel == null)
+        {
+            _GameOverPanel = GameObject.Find("GameOverPanel");
+            _GameOverPanel.SetActive(false);
+        }
     }
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
         PlayerPrefs.SetInt("COINS", coinsCount);
         if(currentScore > bestScore)
             PlayerPrefs.SetInt("BEST", currentScore);
+        _GameOverPanel.SetActive(true);
+        isPaused = true;
     }
+
 
     public void Paused()
     {
@@ -62,5 +81,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         player.enabled = true;
         isPaused = false;
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        isPaused = false;
+        
     }
 }

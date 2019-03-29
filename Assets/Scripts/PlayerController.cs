@@ -7,19 +7,19 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour {
-	private bool canJump = true;
-	private Rigidbody rb;
+	private bool canJump = true;							//Стоит ли игрок на земле
+	private Rigidbody rb;	
 	private Animator anim;
-	private float screenHeight;
-	private Vector2 firstPos;
-	private Vector2 secondPos;
-	private float swipeYlength;
-	[HideInInspector]public bool isOver = false;
-	[SerializeField] private Text _text;
-	[SerializeField] private Text _textCoins;
-	[SerializeField] private ParticleSystem _particle;
+	private float screenHeight;								//Длина экрана, чтобы ограничить высоту нажатия
+	private Vector2 firstPos;								//1ая позиция свайпа
+	private Vector2 secondPos;								//2ая позиция свайпа
+	private float swipeYlength;								//длина свайпа
+	[HideInInspector]public bool isOver = false;			//Окончена ли игра
+	[SerializeField] private Text _text;					//Отображание SCORE на экране
+	[SerializeField] private Text _textCoins;				//Отображение кол-ва монет на экране
+	[SerializeField] private ParticleSystem _particle;		//эффект
 
-	// Use this for initialization
+
 	void Start () {
 		screenHeight = Camera.main.pixelHeight * 0.9f;
 		anim = GetComponent<Animator>();
@@ -29,8 +29,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 
-	// Update is called once per frame
+
 	void FixedUpdate () {
+		if(GameManager.instance.isPaused)
+			return;
 			//Код с MOUSEBTNDOWN
 		/*if(Input.GetMouseButton(0) && canJump && !extraJump && Time.timeScale == 1f)
 		{
@@ -97,46 +99,23 @@ public class PlayerController : MonoBehaviour {
 			swipeYlength = secondPos.y - firstPos.y;
 			if(swipeYlength < 0)
 				return;
-			if(swipeYlength > 150)
+			if(swipeYlength > 100)
 				ExtraJump();
 			else
 				Jump();
-			Debug.Log(swipeYlength);
 		}
 	}
 
-	/*IEnumerator TimeOfTouching()
-	{
-		
-		while(isTouch && timing < 0.3f)
-		{
-			yield return new WaitForSeconds(Time.deltaTime / 2);
-			timing += Time.deltaTime;
-
-			if(!isTouch || timing >= 0.3f)
-				break;
-		}
-		Jump();
-		isTouch = false;
-		Debug.Log(timing);
-		if(timing >= 0.3f)
-			ExtraJump();
-		else
-			canJump = false;
-		timing = 0f;
-		yield return null;
-	}*/
-
 	void Jump()
 	{
-		rb.AddForce(Vector3.up * 15.8f, ForceMode.Impulse); //15.8
+		rb.AddForce(Vector3.up * 15.8f, ForceMode.Impulse);
 		canJump = false;
 		anim.speed = 0f;
 	}
 
 	void ExtraJump()
 	{
-		rb.AddForce(Vector3.up * 20.8f, ForceMode.Impulse);
+		rb.AddForce(Vector3.up * 20f, ForceMode.Impulse);
 		canJump = false;
 		anim.speed = 0f;
 	}
@@ -154,12 +133,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		/* if(other.gameObject.tag == "Obstacle")
+		if(other.gameObject.tag == "Obstacle")
 		{
 			isOver = true;
 			Time.timeScale = 0.23f;
 			GameManager.instance.GameOver();
-		}*/
+		}
 
 		if(other.gameObject.tag == "Coin" && !isOver)
 		{
