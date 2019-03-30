@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public int coinsCount;             //Кол-во монет
     [HideInInspector]public bool isPaused;              //Проверка паузы
     private GameObject _GameOverPanel;                  //Панель паузы
- 
+    private Text _PauseBestScoreText;
+    public Text _GameOverBestScoreText;
+    public bool isOver = false;
+
     public static GameManager Instance
     {
         get
@@ -32,6 +36,10 @@ public class GameManager : MonoBehaviour
             }
         DontDestroyOnLoad(gameObject);
 
+        isOver = false;
+        _GameOverPanel = GameObject.Find("GameOverPanel");
+        _GameOverPanel.SetActive(false);
+
         isPaused = false;
         if(!PlayerPrefs.HasKey("COINS"))
             coinsCount = 0;
@@ -44,9 +52,6 @@ public class GameManager : MonoBehaviour
             bestScore = 0;
         else
             bestScore = PlayerPrefs.GetInt("BEST");
-
-        _GameOverPanel = GameObject.Find("GameOverPanel");
-        _GameOverPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,10 +71,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         PlayerPrefs.SetInt("COINS", coinsCount);
-        if(currentScore > bestScore)
-            PlayerPrefs.SetInt("BEST", currentScore);
         _GameOverPanel.SetActive(true);
         isPaused = true;
+        if(currentScore > bestScore)
+            PlayerPrefs.SetInt("BEST", currentScore);
+        isOver = true;
     }
 
 
@@ -93,5 +99,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
         isPaused = false;
         currentScore = 0;
+        isOver = false;
     }
 }
