@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance = null;          //Singleton
+    private static GameManager instance = null;         //Singleton
     [SerializeField] private PlayerController player;   //Ссылка на игрока
     [HideInInspector]public int bestScore;              //Лучший результат
     [HideInInspector]public int currentScore;           //Текущий результат
@@ -13,7 +13,14 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public bool isPaused;              //Проверка паузы
     private GameObject _GameOverPanel;                  //Панель паузы
  
- 
+    public static GameManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
     void Awake()
     {
         if(instance == null)
@@ -24,9 +31,6 @@ public class GameManager : MonoBehaviour
                 return;
             }
         DontDestroyOnLoad(gameObject);
-
-        //if(GameManager.instance && GameManager.instance != this)
-        //   Destroy(GameManager.instance.gameObject);
 
         isPaused = false;
         if(!PlayerPrefs.HasKey("COINS"))
@@ -88,6 +92,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
         isPaused = false;
-        
+        currentScore = 0;
     }
 }

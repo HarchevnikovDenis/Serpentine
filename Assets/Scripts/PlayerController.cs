@@ -24,58 +24,15 @@ public class PlayerController : MonoBehaviour {
 		screenHeight = Camera.main.pixelHeight * 0.9f;
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
-		_textCoins.text = GameManager.instance.coinsCount.ToString();
+		_textCoins.text = GameManager.Instance.coinsCount.ToString();
 		StartCoroutine("AddScore");
 	}
 
 
 
 	void FixedUpdate () {
-		if(GameManager.instance.isPaused)
+		if(GameManager.Instance.isPaused)	//Если игра на паузе
 			return;
-			//Код с MOUSEBTNDOWN
-		/*if(Input.GetMouseButton(0) && canJump && !extraJump && Time.timeScale == 1f)
-		{
-			Ray _ray = _camera.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;
-
-			if (Physics.Raycast(_ray, out hit))
-			{
-				Transform objectHit = hit.transform;
-				Debug.Log("X: "+objectHit.position.x+" Y: "+objectHit.position.y);
-			}
-			Jump();
-			_particle.Stop();
-		}
-		if(Input.GetMouseButton(0) && !canJump && extraJump)
-		{
-			ExtraJump();
-		}	
-		if(Input.GetMouseButtonUp(0))
-		{
-			canJump = false;
-			extraJump = false;
-		}*/
-
-
-			// Код с TOUCH
-		/*if(Input.touchCount == 1 && canJump)
-		{
-			Touch t = Input.GetTouch(0);
-			if(t.phase == TouchPhase.Began && !isTouch)
-			{
-				if(t.position.y > screenHeight)
-					return;
-				isTouch = true;
-				StartCoroutine("TimeOfTouching");
-				return;
-			}
-
-			if(t.phase == TouchPhase.Ended && isTouch)
-			{
-				isTouch = false;
-			}
-		}*/
 		
 		if(Input.touchCount > 0 && canJump)
 		{
@@ -128,7 +85,6 @@ public class PlayerController : MonoBehaviour {
 			anim.speed = 1f;
 			_particle.Play();
 		}
-
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -137,13 +93,13 @@ public class PlayerController : MonoBehaviour {
 		{
 			isOver = true;
 			Time.timeScale = 0.23f;
-			GameManager.instance.GameOver();
+			GameManager.Instance.GameOver();
 		}
 
 		if(other.gameObject.tag == "Coin" && !isOver)
 		{
-			GameManager.instance.coinsCount += 1;
-			_textCoins.text = GameManager.instance.coinsCount.ToString();
+			GameManager.Instance.coinsCount += 1;
+			_textCoins.text = GameManager.Instance.coinsCount.ToString();
 			Destroy(other.gameObject, 0.1f);
 		}
 		
@@ -156,8 +112,8 @@ public class PlayerController : MonoBehaviour {
 			yield return new WaitForSeconds(0.9f);
 			if(isOver)
 				break;
-			GameManager.instance.currentScore += 1;
-			_text.text = GameManager.instance.currentScore.ToString();
+			GameManager.Instance.currentScore += 1;
+			_text.text = GameManager.Instance.currentScore.ToString();
 		}
 		yield return null;
 	}
