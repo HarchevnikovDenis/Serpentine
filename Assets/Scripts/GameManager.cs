@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public int currentScore;           //Текущий результат
     [HideInInspector]public int coinsCount;             //Кол-во монет
     [HideInInspector]public bool isPaused;              //Проверка паузы
-    private GameObject _GameOverPanel;                  //Панель паузы
+    //private GameObject _GameOverPanel;                  //Панель паузы
     private Text _PauseBestScoreText;                   //Best score во время паузы
     private Text _GameOverBestScoreText;                 //Best score во время смерти
     public bool isOver = false;                         //Идет ли еще игра
@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         isOver = false;
-        _GameOverPanel = GameObject.Find("GameOverPanel");
-        _GameOverPanel.SetActive(false);
+        //_GameOverPanel = GameObject.Find("GameOverPanel");
+        //_GameOverPanel.SetActive(false);
 
         isPaused = false;
         if(!PlayerPrefs.HasKey("COINS"))
@@ -61,17 +61,17 @@ public class GameManager : MonoBehaviour
             player.enabled = false;
         if(player.isOver)
             player.enabled = false;
-        if(_GameOverPanel == null)
+        /*if(_GameOverPanel == null)
         {
             _GameOverPanel = GameObject.Find("GameOverPanel");
             _GameOverPanel.SetActive(false);
-        }
+        }*/
     }
 
     public void GameOver()
     {
         PlayerPrefs.SetInt("COINS", coinsCount);
-        _GameOverPanel.SetActive(true);
+        //_GameOverPanel.SetActive(true);
         isPaused = true;
         if(currentScore > bestScore)
             PlayerPrefs.SetInt("BEST", currentScore);
