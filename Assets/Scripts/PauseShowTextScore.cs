@@ -17,6 +17,5 @@ public class PauseShowTextScore : MonoBehaviour
     {
         int best = PlayerPrefs.GetInt("BEST");
         _textOnPause.text = "BEST: " + best;
-        Debug.Log(best);
     }
 }

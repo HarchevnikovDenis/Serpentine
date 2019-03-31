@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]public int coinsCount;             //Кол-во монет
     [HideInInspector]public bool isPaused;              //Проверка паузы
     private GameObject _GameOverPanel;                  //Панель паузы
-    private Text _PauseBestScoreText;
-    public Text _GameOverBestScoreText;
-    public bool isOver = false;
+    private Text _PauseBestScoreText;                   //Best score во время паузы
+    private Text _GameOverBestScoreText;                 //Best score во время смерти
+    public bool isOver = false;                         //Идет ли еще игра
 
     public static GameManager Instance
     {

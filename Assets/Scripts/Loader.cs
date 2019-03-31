@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class Loader : MonoBehaviour
 {
-    public GameObject gameManager;
-    // Start is called before the first frame update
+    [SerializeField]private GameObject gameManager;
+    [SerializeField]private GameObject soundManager;
+
     void Awake()
     {
         if(GameManager.Instance == null)
         {
             Instantiate(gameManager);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(SoundManager.Instance == null)
+        {
+            Instantiate(soundManager);
+        }
     }
 }

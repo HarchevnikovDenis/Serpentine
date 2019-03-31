@@ -50,3 +50,6 @@ MonoBehaviour:
   isPaused: 1
   _GameOverBestScoreText: {fileID: 3527697075469683278, guid: e3859ba26f0b47f44b5eca2a5d73d478,
     type: 3}
+  isOver: 0
+  soundLevel: 0
+  _sound: {fileID: 4119890351229033123, guid: b3614be601477a440a41da23cac7fba1, type: 3}
