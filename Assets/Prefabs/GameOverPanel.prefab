@@ -634,7 +634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Your Score: 15'
+  m_Text: 'Your Score: '
 --- !u!114 &7677261624654793116
 MonoBehaviour:
   m_ObjectHideFlags: 0

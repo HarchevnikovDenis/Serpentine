@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
-	private Vector3 Player;
+	private GameObject Player;
 	[SerializeField]
 	private Color[] colors;
 	private Camera _cam;
@@ -14,16 +14,11 @@ public class CameraScript : MonoBehaviour {
 		_cam = GetComponent<Camera>();
 		int index = Random.Range(0,colors.Length);
 		_cam.backgroundColor = colors[index];
+		Player = GameObject.FindWithTag("Player");
 	}
-
-	void Update () {
-		Player = GameObject.Find("Player").transform.position;
-	}
-
-	
 
 	void FixedUpdate () {
-		Vector3 needHeight = new Vector3(transform.position.x, Player.y+6f, transform.position.z);
+		Vector3 needHeight = new Vector3(transform.position.x, Player.transform.position.y + 6f, transform.position.z);
 		transform.position = Vector3.Lerp(transform.position, needHeight, 0.1f);
 	}
 }
