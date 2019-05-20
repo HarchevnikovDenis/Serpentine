@@ -692,8 +692,11 @@ PlayerSettings:
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
 <<<<<<< HEAD
+<<<<<<< HEAD
     Build: 0
     Collab: 0
+=======
+>>>>>>> parent of e15357a... its OK
 =======
 >>>>>>> parent of e15357a... its OK
     UNet: 1
