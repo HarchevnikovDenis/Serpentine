@@ -15,15 +15,17 @@ public class PlayerController : MonoBehaviour {
 	private Vector2 secondPos;								//2ая позиция свайпа
 	private float swipeYlength;								//длина свайпа
 	[HideInInspector]public bool isOver = false;			//Окончена ли игра
+	[SerializeField] private Text _text;					//Отображание SCORE на экране
+	[SerializeField] private Text _textCoins;				//Отображение кол-ва монет на экране
 	[SerializeField] private ParticleSystem _particle;		//эффект
 
 
-	void Awake() {
+	void Start () {
 		screenHeight = Camera.main.pixelHeight * 0.9f;
 		anim = GetComponent<Animator>();
 		rb = GetComponent<Rigidbody>();
+		_textCoins.text = GameManager.Instance.coinsCount.ToString();
 		StartCoroutine("AddScore");
-		this.enabled = true;
 	}
 
 
@@ -97,6 +99,7 @@ public class PlayerController : MonoBehaviour {
 		if(other.gameObject.tag == "Coin" && !isOver)
 		{
 			GameManager.Instance.coinsCount += 1;
+			_textCoins.text = GameManager.Instance.coinsCount.ToString();
 			Destroy(other.gameObject, 0.1f);
 		}
 		
@@ -110,6 +113,7 @@ public class PlayerController : MonoBehaviour {
 			if(isOver)
 				break;
 			GameManager.Instance.currentScore += 1;
+			_text.text = GameManager.Instance.currentScore.ToString();
 		}
 		yield return null;
 	}

@@ -9,7 +9,7 @@ public class SoundToggle : MonoBehaviour
     private Toggle _toggle;
     private float _valueToggle;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         _toggle = GetComponent<Toggle>();
         _valueToggle = SoundManager.Instance.soundLevel;
